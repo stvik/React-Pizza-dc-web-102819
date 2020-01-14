@@ -11,11 +11,12 @@ class PizzaList extends Component {
             <th scope="col">Size</th>
             <th scope="col">Vegetarian?</th>
             <th scope="col">Edit</th>
+            <th scope='col'>Delete</th>
           </tr>
         </thead>
         <tbody>
           {
-           this.props.pizzas.map((pizza,index) => <Pizza pizza={pizza} key={index} editPizza={this.props.editPizza}/>)
+           this.props.pizzas.map((pizza,index) => <Pizza pizza={pizza} key={index} editPizza={this.props.editPizza} deletePizza={this.props.deletePizza} />)
           }
         </tbody>
       </table>

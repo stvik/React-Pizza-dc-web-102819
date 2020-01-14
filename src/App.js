@@ -11,7 +11,7 @@ class App extends Component {
 			editPizza: {
 				topping: '',
 				size: 'Small',
-				vegetarian: null
+				vegetarian: false
 			}
 		}
 	}
@@ -52,6 +52,7 @@ class App extends Component {
 	}
 
 	handleSubmit = (e) => {
+		if (this.state.editPizza.id) {
 		let configObj = {
 			method: 'PATCH',
 			headers: {
@@ -63,17 +64,48 @@ class App extends Component {
 
 		fetch(`http://localhost:3000/pizzas/${this.state.editPizza.id}`,configObj)
 		.then(resp => resp.json())
-		.then(pizza => this.updateAllPizza(pizza))
+		.then(pizza => this.updateAllPizza(pizza)) } else {
+
+		let configObj = {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json',
+					accept: 'application/json'
+				},
+				body: JSON.stringify(this.state.editPizza)
+		}
+
+			fetch(`http://localhost:3000/pizzas`, configObj)
+			.then(resp => resp.json())
+			.then(pizza => {
+				this.setState({
+					pizzaOrders: [pizza, ...this.state.pizzaOrders]
+				})
+			})
+		}
+
+
+
+
 	}
 
 	updateAllPizza = (pizza) => {
-		console.log(pizza)
 		let copyPizzas = [...this.state.pizzaOrders]
-		copyPizzas.splice(index, 1, pizza)
 		const index = this.state.pizzaOrders.findIndex(p => p.id === pizza.id)
+		copyPizzas.splice(index, 1, pizza)
 		this.setState({
 			pizzaOrders: copyPizzas
 		})
+	}
+
+	deletePizza = (pizza) => {
+
+		this.setState({
+			pizzaOrders: this.state.pizzaOrders.filter(p => p.id !== pizza.id)
+		})
+
+		fetch(`http://localhost:3000/pizzas/${pizza.id}`, {method: 'DELETE'})
+		
 	}
 
   	render() {
@@ -81,7 +113,7 @@ class App extends Component {
 	      <Fragment>
 	        <Header/>
 	        <PizzaForm pizza={this.state.editPizza} updatePizza={this.updatePizza} handleSubmit={this.handleSubmit}/>
-	        <PizzaList pizzas={this.state.pizzaOrders} editPizza={this.editPizza}/>
+	        <PizzaList pizzas={this.state.pizzaOrders} editPizza={this.editPizza} deletePizza={this.deletePizza}/>
 	      </Fragment>
    	 );
   }

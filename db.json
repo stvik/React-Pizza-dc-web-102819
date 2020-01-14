@@ -14,7 +14,7 @@
     },
     {
       "id": 3,
-      "topping": "Mushroom and Bacon",
+      "topping": "Mushroom ",
       "size": "Medium",
       "vegetarian": false
     },
@@ -59,6 +59,24 @@
       "topping": "Chicken",
       "size": "Large",
       "vegetarian": true
+    },
+    {
+      "topping": "Bacon",
+      "size": "Medium",
+      "vegetarian": true,
+      "id": 11
+    },
+    {
+      "topping": "Tandorri",
+      "size": "Medium",
+      "vegetarian": null,
+      "id": 12
+    },
+    {
+      "topping": "chicken",
+      "size": "Medium",
+      "vegetarian": true,
+      "id": 13
     }
   ]
 }
